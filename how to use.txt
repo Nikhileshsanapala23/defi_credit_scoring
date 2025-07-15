@@ -1,0 +1,53 @@
+Key Features of the Solution
+Comprehensive Feature Engineering:
+
+Captures both activity levels and risk patterns
+
+Normalizes for USD value across different assets
+
+Considers temporal behavior and consistency
+
+Interpretable Scoring Model:
+
+Weighted approach allows for clear reasoning
+
+Each component score can be analyzed separately
+
+Final score normalized to standard 0-1000 range
+
+Robust Analysis:
+
+Visualizations of score distribution
+
+Behavioral pattern analysis across score ranges
+
+Clear documentation of methodology
+
+Extensibility:
+
+Modular design allows easy addition of new features
+
+Scoring weights can be adjusted based on new insights
+
+Can be integrated with real-time monitoring systems
+
+How to Use
+Clone the repository
+
+Install dependencies with pip install -r requirements.txt
+
+Place your transaction data JSON file in the root directory
+
+Run python score_wallets.py
+
+Check the generated files for results and analysis
+
+The system will output:
+
+CSV file with all wallet scores
+
+Visualizations of score distribution
+
+Detailed analysis of behavior patterns
+
+Markdown files documenting methodology and findings
