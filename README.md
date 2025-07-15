@@ -1,42 +1,55 @@
-# defi_credit_scoring
+DeFi Wallet Credit Scoring System
+Overview
+A robust scoring system that evaluates wallet creditworthiness (0–1000) based on historical Aave V2 transactions. Scores reflect reliability, risk patterns, and protocol loyalty.
 
-## Overview
-A robust scoring system that evaluates wallet creditworthiness (0-1000) based on historical Aave V2 transactions. Scores reflect reliability, risk patterns, and protocol loyalty.
-
-## Methodology
-
-### Feature Selection Rationale
+Methodology
+Feature Selection Rationale
 We selected features capturing four key dimensions:
 
-1. **Activity Patterns**:
-   - Transaction frequency and consistency
-   - Protocol tenure (active days)
-   - Recent activity decay
+Activity Patterns
 
-2. **Economic Significance**:
-   - Total USD volume
-   - Average transaction size
-   - Asset concentration
+Transaction frequency and consistency
 
-3. **Risk Indicators**:
-   - Borrow/repay ratios
-   - Liquidation history
-   - Collateral turnover rate
+Protocol tenure (active days)
 
-4. **Behavioral Signals**:
-   - Deposit/withdrawal patterns
-   - Responsiveness to market conditions
-   - Transaction timing regularity
+Recent activity decay
 
-### Scoring Approach
-**Weighted Multi-Factor Model**:
-```mermaid
+Economic Significance
+
+Total USD volume
+
+Average transaction size
+
+Asset concentration
+
+Risk Indicators
+
+Borrow/repay ratios
+
+Liquidation history
+
+Collateral turnover rate
+
+Behavioral Signals
+
+Deposit/withdrawal patterns
+
+Responsiveness to market conditions
+
+Transaction timing regularity
+
+Scoring Approach
+Weighted Multi-Factor Model
+
+mermaid
+Copy
+Edit
 pie title Score Components
     "Activity Metrics" : 30
     "Volume Indicators" : 25
     "Risk Factors" : 35
     "Behavior Patterns" : 10
-Normalization Process:
+Normalization Process
 
 Logarithmic scaling for monetary values
 
@@ -44,12 +57,13 @@ Min-max normalization per feature
 
 Weighted aggregation
 
-Final scaling to 0-1000 range
+Final scaling to 0–1000 range
 
 System Architecture
 Processing Pipeline
-Diagram
-Code
+mermaid
+Copy
+Edit
 graph TD
     A[Raw JSON Data] --> B[Data Preprocessing]
     B --> C[Feature Engineering]
@@ -57,7 +71,7 @@ graph TD
     D --> E[Analysis & Visualization]
     E --> F[Output Reports]
 Component Breakdown
-Data Preprocessing:
+Data Preprocessing
 
 Timestamp conversion
 
@@ -67,9 +81,11 @@ USD value calculation
 
 Missing value handling
 
-Feature Engineering:
+Feature Engineering
 
 python
+Copy
+Edit
 def calculate_features(transactions):
     return {
         'tx_regularity': calculate_entropy(tx_times),
@@ -77,7 +93,7 @@ def calculate_features(transactions):
         'market_response': price_change_correlation,
         'flashloan_patterns': detect_flashloan_clusters
     }
-Scoring Engine:
+Scoring Engine
 
 Modular weight configuration
 
@@ -85,7 +101,7 @@ Dynamic score adjustment
 
 Anti-manipulation checks
 
-Analysis Module:
+Analysis Module
 
 Interactive visualizations
 
@@ -95,34 +111,38 @@ Protocol-level analytics
 
 Processing Flow
 Step-by-Step Execution
-Data Ingestion:
+Data Ingestion
 
 Input: Raw transaction JSON
 
 Output: Structured DataFrame
 
-Feature Extraction:
+Feature Extraction
 
 python
+Copy
+Edit
 # Sample feature calculation
 df['risk_velocity'] = df['borrows'].rolling('7d').sum() / df['collateral']
-Score Calculation:
+Score Calculation
 
-text
+java
+Copy
+Edit
 Raw Score = 
   0.30 * ActivityScore +
   0.25 * VolumeScore + 
   0.35 * RiskScore +
   0.10 * BehaviorScore
-Post-Processing:
+Post-Processing
 
-Score clamping (0-1000)
+Score clamping (0–1000)
 
 Percentile ranking
 
 Confidence intervals
 
-Output Generation:
+Output Generation
 
 CSV: Wallet, Score, Sub-scores
 
@@ -131,22 +151,19 @@ PDF: Protocol health report
 Dashboard: Interactive explorer
 
 Key Design Decisions
-Temporal Weighting:
-
+Temporal Weighting
 Recent transactions weighted 1.5x
 
 Decay factor: 0.85 per month
 
-Anti-Gaming Measures:
-
+Anti-Gaming Measures
 Flashloan detection
 
 Wash trading filters
 
 Sybil attack resistance
 
-Asset Normalization:
-
+Asset Normalization
 Volatility-adjusted weights
 
 Liquidity premium
@@ -170,13 +187,16 @@ Memory-efficient feature storage
 
 Usage
 bash
+Copy
+Edit
 python score_wallets.py \
   --input transactions.json \
   --weights config/weights_v1.yaml \
   --output scores/
-Configuration Options:
-
+Configuration Options
 yaml
+Copy
+Edit
 # weights_v1.yaml
 scoring_weights:
   activity: 0.30
@@ -189,9 +209,9 @@ risk_params:
   liquidation_penalty: -150
 Extensibility
 Adding New Features
-Implement feature calculator:
-
 python
+Copy
+Edit
 @feature('flash_frequency')
 def calc_flash_frequency(txs):
     return len(detect_flashloans(txs)) / len(txs)
@@ -207,19 +227,19 @@ Protocol upgrade adapters
 Regulatory compliance modules
 
 Validation Framework
-Historical Backtesting:
+Historical Backtesting
 
 Compare scores vs actual liquidations
 
 ROC AUC target: >0.85
 
-Stress Testing:
+Stress Testing
 
 Black Thursday scenarios
 
 Flash crash simulations
 
-Edge Cases:
+Edge Cases
 
 New wallets
 
@@ -228,41 +248,43 @@ Contract interactions
 MEV bots
 
 Limitations
-Data Availability:
+Data Availability: Limited to on-chain visible activity
 
-Limited to on-chain visible activity
+Protocol Specific: Tailored for Aave V2 only
 
-No off-chain credit history
+Market Conditions: Static weights during high volatility
 
-Protocol Specific:
+Off-chain: No off-chain credit or oracle risk signals
 
-Aave V2 features only
-
-Requires adaptation for other platforms
-
-Market Conditions:
-
-Static weights during volatility
-
-No oracle risk assessment
-
-text
-
+Summary
 This README provides:
-1. **Clear methodology** explaining the scoring rationale
-2. **Visual architecture** using Mermaid diagrams
-3. **Technical implementation** details
-4. **Usage instructions** with examples
-5. **Extension guidelines** for future development
+
+Clear methodology explaining the scoring rationale
+
+Visual architecture using Mermaid diagrams
+
+Technical implementation details
+
+Usage instructions with examples
+
+Extension guidelines for future development
 
 Key features that make this documentation effective:
-- **Visual representations** of complex relationships
-- **Code snippets** showing critical implementations
-- **Configuration examples** for practical usage
-- **Comprehensive coverage** from theory to execution
-- **Transparent limitations** for proper expectation setting
 
-The document serves both as:
-- **Onboarding guide** for new team members
-- **Reference manual** for maintaining/expanding the system
-- **Technical specification** for integration purposes
+Visual representations of complex relationships
+
+Code snippets showing critical implementations
+
+Configuration examples for practical usage
+
+Comprehensive coverage from theory to execution
+
+Transparent limitations for proper expectation setting
+
+This document serves both as:
+
+Onboarding guide for new team members
+
+Reference manual for maintaining/expanding the system
+
+Technical specification for integration purposes
